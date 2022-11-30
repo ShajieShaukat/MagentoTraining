@@ -7,12 +7,19 @@
         </tab>
         <section id="email_template" translate="label" type="text" sortOrder="42" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <class>separator-top</class>
             <label>Email Template</label>
             <tab>rltsquare_config</tab>
-            <resource>Training_Task::email_template</resource>
+            <resource>RLTSquare_Unit1::email_template</resource>
             <group id="general" translate="label" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Email Template</label>
+                <field id="recipient_email" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Send Emails To</label>
+                    <validate>validate-email</validate>
+                </field>
+                <field id="sender_email_identity" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
                 <field id="rltsquare_email_template" translate="label" type="select" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Email Templates</label>

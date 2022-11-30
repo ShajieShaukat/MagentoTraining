@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Task\Helper;
+namespace RLTSquare\Unit1\Helper;
 
 use Exception;
 use Magento\Email\Model\BackendTemplate;
@@ -24,6 +24,8 @@ class Email extends AbstractHelper
     /**
      * configuration path
      */
+    public const XML_PATH_RECIPIENT_EMAIL = 'email_template/general/recipient_email';
+    public const XML_PATH_SENDER_EMAIL_IDENTITY = 'email_template/general/sender_email_identity';
     const XML_PATH_EMAIL_TEMPLATE_FIELD = 'email_template/general/rltsquare_email_template';
     /**
      * @var ScopeConfigInterface
@@ -76,10 +78,12 @@ class Email extends AbstractHelper
     {
         try {
             $templateId = $this->getTemplateId(self::XML_PATH_EMAIL_TEMPLATE_FIELD);
+            $recipientEmail = $this->getRecipientEmail(self::XML_PATH_RECIPIENT_EMAIL);
+            $senderEmail = $this->getSenderEmailIdentity(self::XML_PATH_SENDER_EMAIL_IDENTITY);
             $this->inlineTranslation->suspend();
             $sender = [
                 'name' => 'RLTSQUARE',
-                'email' => 'shajie.shaukat@rltsquare.com',
+                'email' => $recipientEmail,
             ];
             $transport = $this->transportBuilder
                 ->setTemplateIdentifier($templateId)
@@ -93,7 +97,7 @@ class Email extends AbstractHelper
                     'templateVar' => 'My Topic'
                 ])
                 ->setFromByScope($sender)
-                ->addTo('shajieshah@gmail.com')
+                ->addTo($senderEmail)
                 ->getTransport();
             $transport->sendMessage();
             $this->inlineTranslation->resume();
@@ -123,6 +127,30 @@ class Email extends AbstractHelper
             $path,
             ScopeInterface::SCOPE_STORE,
             $storeId
+        );
+    }
+
+    /**
+     * @param $path
+     * @return mixed
+     */
+    public function getRecipientEmail($path)
+    {
+        return $this->scopeConfig->getValue(
+            $path,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * @param $path
+     * @return mixed
+     */
+    public function getSenderEmailIdentity($path)
+    {
+        return $this->scopeConfig->getValue(
+            $path,
+            ScopeInterface::SCOPE_STORE
         );
     }
 }

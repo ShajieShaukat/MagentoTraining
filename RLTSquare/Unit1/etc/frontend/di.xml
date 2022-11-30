@@ -5,7 +5,7 @@
         <arguments>
             <argument name="routerList" xsi:type="array">
                 <item name="emailSend" xsi:type="array">
-                    <item name="class" xsi:type="string">Training\Task\Controller\Router</item>
+                    <item name="class" xsi:type="string">RLTSquare\Unit1\Controller\Router</item>
                     <item name="disable" xsi:type="boolean">false</item>
                     <item name="sortOrder" xsi:type="string">40</item>
                 </item>

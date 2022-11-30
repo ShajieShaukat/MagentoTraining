@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Task\Controller;
+namespace RLTSquare\Unit1\Controller;
 
 use Magento\Framework\App\Action\Forward;
 use Magento\Framework\App\ActionFactory;
