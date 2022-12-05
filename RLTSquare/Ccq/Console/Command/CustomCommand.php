@@ -6,7 +6,6 @@ namespace RLTSquare\Ccq\Console\Command;
 
 use Magento\Framework\MessageQueue\PublisherInterface;
 use Psr\Log\LoggerInterface;
-use RLTSquare\Ccq\Api\Data\QueueDataInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,30 +26,23 @@ class CustomCommand extends Command
      */
     protected PublisherInterface $publisher;
     /**
-     * @var QueueDataInterface
-     */
-    protected QueueDataInterface $queueData;
-    /**
      * @var LoggerInterface
      */
     protected LoggerInterface $logger;
 
     /**
      * @param LoggerInterface $logger
-     * @param QueueDataInterface $queueData
      * @param PublisherInterface $publisher
      * @param Json $json
      * @param string|null $name
      */
     public function __construct(
         LoggerInterface $logger,
-        QueueDataInterface $queueData,
         PublisherInterface $publisher,
         Json $json,
         string $name = null,
     ) {
         $this->publisher = $publisher;
-        $this->queueData = $queueData;
         $this->logger = $logger;
         $this->json = $json;
         parent::__construct($name);
@@ -87,12 +79,11 @@ class CustomCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $exitCode = 0;
-
         $var1 = $input->getArgument(self::Var1);
         $var2 = $input->getArgument(self::Var2);
-        $this->queueData->setData(['var1' => $var1, 'var2' => $var2]);
-        $this->publisher->publish(self::TOPIC_NAME, $this->queueData);
-        $this->logger->info($this->json->serialize(["var1" => $var1, "var2" => $var2]));
+        $arr = $this->json->serialize(["var1" => $var1, "var2" => $var2]);
+        $this->publisher->publish(self::TOPIC_NAME, $arr);
+        $this->logger->info($arr);
         return $exitCode;
     }
 }
