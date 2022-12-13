@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="rltsquare" translate="label" sortOrder="200">
+            <label>RLTSquare</label>
+        </tab>
+        <section id="unit3" translate="label" type="text" sortOrder="42" showInDefault="1"
+                 showInWebsite="1" showInStore="1">
+            <label>Unit 3</label>
+            <tab>rltsquare</tab>
+            <resource>RLTSquare_Unit3::config</resource>
+            <group id="general" translate="label" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Settings</label>
+                <field id="username" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>User Name</label>
+                </field>
+                <field id="password" type="obscure" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                    <validate>required-entry</validate>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="environment_type" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Environment Type</label>
+                    <source_model>RLTSquare\Unit3\Model\Config\EnvironmentTypes</source_model>
+                    <comment>
+                        <![CDATA[Please Select your environment from this list.]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
