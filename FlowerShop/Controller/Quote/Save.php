@@ -2,50 +2,34 @@
 
 namespace RLTSquare\FlowerShop\Controller\Quote;
 
-use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\ActionInterface;
-use Magento\Framework\Controller\Result\Raw;
-use Magento\Quote\Api\CartRepositoryInterface;
-use Magento\Quote\Model\QuoteIdMaskFactory;
+use Magento\Framework\App\Action\Action;
 
-/**
- *
- */
-class Save implements ActionInterface
+class Save extends Action
 {
-    /**
-     * @var QuoteIdMaskFactory
-     */
-    protected QuoteIdMaskFactory $quoteIdMaskFactory;
+    protected $quoteIdMaskFactory;
 
-    /**
-     * @var CartRepositoryInterface
-     */
-    protected CartRepositoryInterface $quoteRepository;
+    protected $quoteRepository;
 
-    /**
-     * @param QuoteIdMaskFactory $quoteIdMaskFactory
-     * @param CartRepositoryInterface $quoteRepository
-     */
     public function __construct(
-        QuoteIdMaskFactory $quoteIdMaskFactory,
-        CartRepositoryInterface $quoteRepository
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Quote\Model\QuoteIdMaskFactory $quoteIdMaskFactory,
+        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
     ) {
+        parent::__construct($context);
         $this->quoteRepository = $quoteRepository;
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return \Magento\Framework\Controller\Result\Raw
      */
     public function execute()
     {
         $post = $this->getRequest()->getPostValue();
         if ($post) {
-            $cartId = $post['cartId'];
+            $cartId       = $post['cartId'];
             $deliveryDate = $post['delivery_note'];
-            $loggin = $post['is_customer'];
+            $loggin       = $post['is_customer'];
 
             if ($loggin === 'false') {
                 $cartId = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id')->getQuoteId();

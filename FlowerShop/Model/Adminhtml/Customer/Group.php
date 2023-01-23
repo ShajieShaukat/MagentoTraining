@@ -3,7 +3,7 @@
 namespace RLTSquare\FlowerShop\Model\Adminhtml\Customer;
 
 use Magento\Customer\Model\ResourceModel\Group\CollectionFactory;
-use Magento\Framework\Option\ArrayInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 
 /**
  * Class for get customer groups
